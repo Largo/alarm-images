@@ -23,12 +23,7 @@ jobs:
         run: |
           sudo bash create-image rpi
           zip -v rpi-archlinux.img.zip rpi-archlinux.img
-
-      - name: Build Raspberry Pi 2/3 Image
-        run: |
-          sudo bash create-image rpi-2
-          zip -v rpi-2-archlinux.img.zip rpi-2-archlinux.img
-
+          
       - name: Build Raspberry Pi 4 Image
         run: |
           sudo bash create-image rpi-4
