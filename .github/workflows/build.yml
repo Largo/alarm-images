@@ -19,11 +19,17 @@ jobs:
       # Build Images
       # Note: Uploading zip file artifact will be double zip. Do not delete .img file
       # See https://github.com/actions/upload-artifact#zipped-artifact-downloads
-              
-      - name: Build Raspberry Pi 4 Image
+
+      - name: Build Raspberry Pi 2/3/4 Image
         run: |
-          sudo bash create-image rpi-4
+          sudo bash create-image rpi-armv7
           zip -v rpi-4-archlinux.img.zip rpi-4-archlinux.img
+
+      - name: Build Raspberry Pi 3 AArch64 Image
+        run: |
+          sudo bash create-image rpi-aarch64
+          sudo cp rpi-aarch64-archlinux.img rpi-3-aarch64-archlinux.img
+          zip -v rpi-3-aarch64-archlinux.img.zip rpi-3-aarch64-archlinux.img
 
       - name: Build Raspberry Pi 4 AArch64 Image
         run: |
@@ -41,12 +47,18 @@ jobs:
 
 
       # Upload artifacts
-
-      - name: Upload Raspberry Pi 4 Image artifact
+     
+      - name: Upload Raspberry Pi 2/3/4 Image artifact
         uses: actions/upload-artifact@v2
         with:
           name: rpi-4-archlinux.img
           path: rpi-4-archlinux.img
+
+      - name: Upload Raspberry Pi 3 AArch64 Image artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: rpi-3-aarch64-archlinux.img
+          path: rpi-3-aarch64-archlinux.img
 
       - name: Upload Raspberry Pi 4 AArch64 Image artifact
         uses: actions/upload-artifact@v2
@@ -62,6 +74,7 @@ jobs:
         with:
           files: |
             rpi-4-archlinux.img.zip
+            rpi-3-aarch64-archlinux.img.zip
             rpi-4-aarch64-archlinux.img.zip
         env:
           GITHUB_TOKEN: ${{ github.token }}
